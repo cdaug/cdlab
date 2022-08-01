@@ -1,0 +1,265 @@
+Write a program to detect tokens of a text file and counts the number of words,
+spaces and lines.
+Solution:
+
+#include <stdio.h>
+#include <stdlib.h>
+int main (int argc, char **argv)
+{
+  FILE * file;
+  char path[100];
+  char ch;
+  int characters, words, spaces, lines
+  printf("Enter source file path: ");
+  scanf("%s", path);
+  file = fopen(path, "r");
+  if (file == NULL)
+  {
+    printf("\n Unable to open file. \n");
+    exit(EXIT_FAILURE);
+  }
+  characters = words = lines = spaces = 0;
+  while ((ch = fgetc(file)) != EOF)
+  {
+  characters++;
+  if (ch == '\n' || ch == '\0')
+    lines++;
+  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\0')
+    words++;
+  }
+  if (characters > 0)
+  {
+    words++;
+    lines++;
+  }
+  spaces = words - 1;
+  printf("Total words:%d\n", words);
+  printf ("Total spaces:%d\n", spaces);
+  printf("Total lines:%d\n", lines);
+  fclose (file);
+  return 0;
+}
+
+Q2>) 
+
+Write a program to check the validity of a English word entered by the user.
+Solution:
+
+import java.util.*;
+class Main {
+  public static void main (String args[]) {
+    Scanner in = new Scanner (System.in);
+    String str = "";
+    char ch;
+    int ascii = 0;
+    System.out.println("Enter a word: ");
+    str = in.next();
+    if (str.length() == 1) {
+      System.out.println ("\nError => Not a word!");
+      System.exit(0);
+    }
+    else {
+      for (int i = 0; i < str.length(); i++) {
+          ch = str.charAt(i);
+          ascii = (int) ch;
+          if (ascii >= 65 && ascii <= 122) {
+              continue;
+          }
+          else {
+              System.out.println ("\nError => Not a valid word!");
+              System.exit(0);
+              }
+      }
+      System.out.println("Valid Word!");
+    }
+  }
+}
+
+Q3>)
+
+Design a lexical analyser that would ignore redundant spaces, tabs, newlines and
+comments. It will identify the identifiers and numbers.
+Solution:
+#include<iostream>
+#include<fstream>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+using namespace std;
+int isKeyword(char buffer[]){
+char keywords[32][10] = {"auto","break","case","char","const","continue","default",
+"do","double","else","enum","extern","float","for","goto",
+"if","int","long","register","return","short","signed",
+"sizeof","static","struct","switch","typedef","union",
+"unsigned","void","volatile","while"};
+int i, flag = 0;
+for(i = 0; i < 32; ++i){
+if(strcmp(keywords[i], buffer) == 0);
+flag = 1;
+break;
+}
+}
+return flag;
+}
+int main(){
+  int number = 0;
+  int indentifier = 0;
+char ch, buffer[15];
+int i, j = 0;
+ifstream fin("program.txt");
+if(!fin.is_open()){
+cout<<"error while opening the file\n";
+exit(0);
+}
+while(!fin.eof()){
+  ch = fin.get();
+  if(isalnum(ch)){
+  buffer[j++] = ch;
+  }
+  if(isdigit(ch)) {
+  cout<<ch<<" is Number\n";
+  number++;
+  }
+  else if((ch == ' ' || ch == '\n') && (j != 0)){
+  buffer[j] = '\0';
+  j = 0;
+  if(isKeyword(buffer) != 1)
+  cout<<buffer<<" is Identifier\n";
+  indentifier++;
+  }
+}
+  cout<<endl;
+  cout << "Total Numbers:" << number <<endl;
+  cout << "Total Identifiers:" << indentifier <<endl;
+fin.close();
+return 0;
+}
+                                 program.txt
+void main () {
+  int a = 20,b = 5,c = 1,d;
+  d = a * (b - c);
+  double e = (double) (d * d);
+  float e = (float) (d % a);
+}
+
+Q4>)
+Question 4:
+Design a lexical analyser that would ignore redundant spaces, tabs, newlines and
+comments. It will identify the Keywords and operators.
+Solution:
+
+#include<iostream>
+#include<fstream>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+using namespace std;
+int isKeyword(char buffer[]){
+char keywords[32][10] = {"auto","break","case","char","const","continue","default",
+"do","double","else","enum","extern","float","for","goto",
+"if","int","long","register","return","short","signed",
+"sizeof","static","struct","switch","typedef","union",
+"unsigned","void","volatile","while"};
+int i, flag = 0;
+for(i = 0; i < 32; ++i){
+if(strcmp(keywords[i], buffer) == 0){
+flag = 1;
+break;
+}
+}
+return flag;
+}
+int main(){
+char ch, buffer[15], operators[] = "+-*/%=";
+int ops = 0;
+int keys= 0;
+ifstream fin("program.txt");
+int i,j=0;
+if(!fin.is_open()){
+cout<<"error while opening the file\n";
+exit(0);
+}
+while(!fin.eof()){
+  ch = fin.get();
+  for(i = 0; i < 6; ++i){
+  if(ch == operators[i])
+  {
+  printf("%c is Operator\n", ch);
+  ops++;
+  }}
+  if(isalnum(ch)){
+  buffer[j++] = ch;
+  }
+  else if((ch == ' ' || ch == '\n') && (j != 0)){
+  buffer[j] = '\0';
+  j = 0;
+  if(isKeyword(buffer) == 1)
+  {
+  cout<<buffer<<" is Keyword\n";
+  keys++;
+  }
+  }
+}
+cout<<endl;
+cout<<"Total Operators:"<<ops<<endl;
+cout<<"Total Keywords:"<<keys<<endl;
+fin.close();
+return 0;
+}
+                                    program.txt
+void main () {
+  int a = 20,
+  b = 5,
+  c = 1,
+  d;
+  d = a * (b - c);
+  double e = (double) (d * d);
+  float e = (float) (d % a);
+}
+
+Question 5:
+Design a lexical analyser to delete comments from a program.
+Solution:
+
+#include <stdio.h>
+int main (void)
+{
+  char *sourceFile = "MyCfile.cpp"; //your source code
+  char *outputFile = "MyCfileWoComments.cpp"; //output file
+  FILE *fp, *ft;
+  char ch, nextc;
+  fp = fopen (sourceFile, "r");
+  ft = fopen (outputFile, "w");
+  if (fp == NULL) {printf ("Error in opening source file\n"); return 1;}
+  if (ft == NULL) {printf ("Error in opening output file\n"); return 1;}
+  nextc = fgetc (fp);
+  while (nextc != EOF)
+  {
+    ch = nextc;
+    nextc = fgetc (fp);
+    if ((ch == '/') && (nextc == '/'))
+    {
+    nextc = fgetc (fp);
+    while (nextc != '\n') {// move to the end of line
+      nextc = fgetc (fp);
+    }
+    ch = nextc; //end of line character
+    nextc = fgetc(fp); //read 1st character from a new line
+  }
+  else if ((ch == '/') && (nextc == '*')){
+  {
+    nextc = fgetc (fp);
+    while (!((ch == '*') && (nextc == '/'))) {/* move to the end of comment*/
+      ch = nextc;
+      nextc = fgetc (fp);
+    }
+    ch = fgetc (fp); //read first character after the end of comment block
+    nextc = fgetc (fp);
+    }
+  }
+  putc (ch, ft);
+  }
+  fclose (fp);
+  fclose (ft);
+  return 0;
+}
